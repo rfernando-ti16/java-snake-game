@@ -6,8 +6,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 
 import com.field.FieldLoader;
+import com.game.states.Game;
+import com.game.states.Main;
 import com.model.Block;
 import com.model.Direction;
 import com.model.Field;
@@ -25,6 +28,7 @@ import com.model.SnakePiece;
 public class GamePlay {
     private Image blockImage;
     private Field field;
+    private String mapName;
     private Snake snakeOnField;
     private Food foodOnField;
     /** Qual  level de dificuldade que estamos */
@@ -46,11 +50,15 @@ public class GamePlay {
     /** Para saber qual o tamanho de folga qu foi utilizado para centralizar o campo */
     private int extraSize[];
 
+    public GamePlay(String mapName) {
+        this.mapName = mapName;
+    }
+
     public void loadResources() throws SlickException{
         blockImage = new Image("img/block.png");
 
         // Carrega o campo
-        field = FieldLoader.loadField("Map1.map", blockImage);
+        field = FieldLoader.loadField(mapName, blockImage);
 
         random = new Random();
         createSnakeOnField();
@@ -63,7 +71,7 @@ public class GamePlay {
         extraSize[1] = (Game.GAME_WIDTH - (field.getWidth() * 10)) / 2;
     }
 
-    public void updateGame(Input input, int delta) {
+    public void updateGame(Input input, int delta, StateBasedGame sbg) {
         if (input.isKeyPressed(Input.KEY_ENTER)) {
             paused = !paused;
         }
@@ -118,8 +126,7 @@ public class GamePlay {
                 }
                 Object o =  field.getObjectOnField(x, y);
                 if (o instanceof Block || o instanceof SnakePiece) {
-                    System.out.println("Perdeu preiboy");
-                    // TODO Colocar tela de game over
+                    sbg.enterState(Main.GAME_OVER);
                 } else {
                     if (o instanceof Food) {
                         // Remove a comida atual para criar outra
