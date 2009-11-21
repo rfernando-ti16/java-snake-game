@@ -19,7 +19,7 @@ public class Block extends GameObject{
     }
 
     public void draw(Graphics g, int[] extraSize) {
-        block.draw((x * 10) + extraSize[1], (y * 10) + extraSize[0]);
+        block.draw((x * block.getWidth()) + extraSize[1], (y * block.getHeight()) + extraSize[0]);
     }
 
 }

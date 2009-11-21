@@ -8,6 +8,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import com.i18n.Messages;
+
 /**
  * Representa o estado do Game Over
  * 
@@ -28,20 +30,17 @@ public class GameOver extends BasicGameState {
         return stateId;
     }
 
-    @Override
     public void init(GameContainer arg0, StateBasedGame arg1)
             throws SlickException {
         backGround = new Image("img/gameOver.png");
     }
 
-    @Override
     public void render(GameContainer arg0, StateBasedGame arg1, Graphics g)
             throws SlickException {
         backGround.draw(( Game.GAME_WIDTH - backGround.getWidth()) / 2, 50);
-        g.drawString("Pressione Esc para voltar para o menu", 250, backGround.getHeight() + 100);
+        g.drawString(Messages.getString("GameOver.precissioneEscParaVoltar"), 250, backGround.getHeight() + 100); 
     }
 
-    @Override
     public void update(GameContainer gc, StateBasedGame sbg, int delta)
             throws SlickException {
         if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {

@@ -31,21 +31,18 @@ public class Game extends BasicGameState{
         return stateId;
     }
 
-    @Override
     public void init(GameContainer arg0, StateBasedGame arg1)
             throws SlickException {
-        gamePlay = new GamePlay("Map1.map");
+        gamePlay = new GamePlay();
         gamePlay.loadResources();
     }
 
-    @Override
     public void render(GameContainer arg0, StateBasedGame sbg, Graphics g)
             throws SlickException {
         gamePlay.renderGamePlay(g);
         
     }
 
-    @Override
     public void update(GameContainer gc, StateBasedGame sbg, int delta)
             throws SlickException {
         gamePlay.updateGame(gc.getInput(), delta, sbg);

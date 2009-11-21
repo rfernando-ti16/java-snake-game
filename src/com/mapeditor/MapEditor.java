@@ -19,6 +19,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
+import com.i18n.Messages;
+
 /**
  * Editor de mapas para o jogo
  * 
@@ -32,7 +34,7 @@ public class MapEditor extends JFrame {
     private static final long serialVersionUID = -250713205949659413L;
     private JDesktopPane desktop;
     public MapEditor () {
-        super("Snake - Map Editor");
+        super("Snake - Map Editor"); 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         desktop = new JDesktopPane();
@@ -42,10 +44,10 @@ public class MapEditor extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
-        JMenu menu = new JMenu("Arquivo");
+        JMenu menu = new JMenu(Messages.getString("MapEditor.arquivo")); 
         menuBar.add(menu);
 
-        JMenuItem item = new JMenuItem("Novo");
+        JMenuItem item = new JMenuItem(Messages.getString("MapEditor.novo")); 
         menu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -57,7 +59,7 @@ public class MapEditor extends JFrame {
             }
         });
 
-        item = new JMenuItem("Abrir");
+        item = new JMenuItem(Messages.getString("MapEditor.abrir"));
         menu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
@@ -66,7 +68,7 @@ public class MapEditor extends JFrame {
                 
                     @Override
                     public String getDescription() {
-                        return "Apenas arquivos .map";
+                        return Messages.getString("MapEditor.apenasArquivosMap");
                     }
                 
                     @Override
@@ -132,10 +134,10 @@ public class MapEditor extends JFrame {
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
-                        JOptionPane.showMessageDialog(null, "Arquivo vazio", "Erro", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Messages.getString("MapEditor.arquivoVazio"), Messages.getString("MapEditor.erro"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
                         e.printStackTrace();
                     } catch (IllegalArgumentException e) {
-                        JOptionPane.showMessageDialog(null, "Arquivo malformado", "Erro", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Messages.getString("MapEditor.arquivoMalFormado"), Messages.getString("MapEditor.erro"), JOptionPane.ERROR_MESSAGE); //$NON-NLS-1$ //$NON-NLS-2$
                         e.printStackTrace();
                     }
                     
@@ -143,7 +145,7 @@ public class MapEditor extends JFrame {
             }
         });
 
-        item = new JMenuItem("Sair");
+        item = new JMenuItem(Messages.getString("MapEditor.sair"));
         menu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {

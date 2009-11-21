@@ -8,9 +8,11 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import com.config.ConfigManager;
 import com.field.FieldLoader;
 import com.game.states.Game;
 import com.game.states.Main;
+import com.i18n.Messages;
 import com.model.Block;
 import com.model.Direction;
 import com.model.Field;
@@ -28,7 +30,6 @@ import com.model.SnakePiece;
 public class GamePlay {
     private Image blockImage;
     private Field field;
-    private String mapName;
     private Snake snakeOnField;
     private Food foodOnField;
     /** Qual  level de dificuldade que estamos */
@@ -45,24 +46,27 @@ public class GamePlay {
     /** Quantos milisegundos de um segundo */
     private static int MILI = 1000;
 
+    /** Gerenciador da configuração */
+    private ConfigManager manager;
+
     private Random random;
 
     /** Para saber qual o tamanho de folga qu foi utilizado para centralizar o campo */
     private int extraSize[];
 
-    public GamePlay(String mapName) {
-        this.mapName = mapName;
+    public GamePlay() {
+        manager = ConfigManager.getInstance();
     }
 
     public void loadResources() throws SlickException{
         blockImage = new Image("img/block.png");
 
         // Carrega o campo
-        field = FieldLoader.loadField(mapName, blockImage);
+        field = FieldLoader.loadField(manager.getMaze(), blockImage);
 
         random = new Random();
         createSnakeOnField();
-        level = 1;
+        level = manager.getLevel();
 
         extraSize = new int[2];
         // Y
@@ -166,7 +170,7 @@ public class GamePlay {
     }
     
     public void renderGamePlay(Graphics g) {
-        g.drawString(" Pontos: " + score + " | Nível: " + level, 5 , 5 );
+        g.drawString(Messages.getString("GamePlay.pontos") + score + Messages.getString("GamePlay.nivel") + level, 5 , 5 ); //$NON-NLS-1$ //$NON-NLS-2$
         for (int i = 0; i < field.getHeight(); i++) {
             for (int j = 0; j < field.getWidth(); j++) {
                 if (field.getFieldMap()[i][j] != null) {
