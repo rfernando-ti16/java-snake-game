@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
+import com.i18n.Messages;
+
 /**
  * Representa a janela de edição de cada mapa
  * 
@@ -61,7 +63,7 @@ public class MapDesign extends JInternalFrame implements MouseListener, MouseMot
     private static int MAP_CREATION = 0;
 
     public MapDesign() {
-        super("Novo_Map" + MAP_CREATION++ + ".map*", true, true);
+        super("Novo_Map" + MAP_CREATION++ + ".map*", true, true); 
         setFileName(getTitle());
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 
@@ -69,10 +71,10 @@ public class MapDesign extends JInternalFrame implements MouseListener, MouseMot
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar(menuBar);
 
-        JMenu menu = new JMenu("Arquivo");
+        JMenu menu = new JMenu(Messages.getString("MapDesign.arquivo"));
         menuBar.add(menu);
 
-        JMenuItem item = new JMenuItem("Setar ponto de partida");
+        JMenuItem item = new JMenuItem(Messages.getString("MapDesign.setarPontoDePartida"));
         menu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -80,7 +82,7 @@ public class MapDesign extends JInternalFrame implements MouseListener, MouseMot
             }
         });
 
-        item = new JMenuItem("Salvar");
+        item = new JMenuItem(Messages.getString("MapDesign.salvar"));
         menu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -91,7 +93,7 @@ public class MapDesign extends JInternalFrame implements MouseListener, MouseMot
             }
         });
 
-        item = new JMenuItem("Salvar como");
+        item = new JMenuItem(Messages.getString("MapDesign.salvarComo")); 
         menu.add(item);
         item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -101,21 +103,21 @@ public class MapDesign extends JInternalFrame implements MouseListener, MouseMot
         });
 
         // Para informar o tamanho do mapa
-        JLabel lblWidth = new JLabel("Largura");
+        JLabel lblWidth = new JLabel(Messages.getString("MapDesign.largura"));
         lblWidth.setBounds(5, 5, 100, 20);
 
         mapWidthBox = new JTextField();
         mapWidthBox.setBounds(5, 25, 100, 20);
         mapWidthBox.setText(String.valueOf(getMapWidth()));
 
-        JLabel lblHeight = new JLabel("Altura");
+        JLabel lblHeight = new JLabel(Messages.getString("MapDesign.altura"));
         lblHeight.setBounds(120, 5, 100, 20);
 
         mapHeightBox = new JTextField();
         mapHeightBox.setBounds(120, 25, 100, 20);
         mapHeightBox.setText(String.valueOf(getMapHeight()));
 
-        JButton btnCriarNovoMap = new JButton("Gerar novo mapa com as medidas");
+        JButton btnCriarNovoMap = new JButton(Messages.getString("MapDesign.gerarNovoMapa"));
         btnCriarNovoMap.setBounds(240, 5, 300, 40);
         btnCriarNovoMap.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent event) {
@@ -136,10 +138,10 @@ public class MapDesign extends JInternalFrame implements MouseListener, MouseMot
 
                         repaint();
                     } else {
-                        JOptionPane.showMessageDialog(null, "O mapa pode ter no máximo 70 de largura e 50 de altura", "Erro", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, Messages.getString("MapDesign.oMapaPodeTerNoMaximo"), Messages.getString("MapDesign.erro"), JOptionPane.ERROR_MESSAGE);
                     }
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Número inválido para a largura ou altura do mapa", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, Messages.getString("MapDesign.numeroInvalido"), Messages.getString("MapDesign.erro"), JOptionPane.ERROR_MESSAGE);
                 }
                 
             }
@@ -158,8 +160,8 @@ public class MapDesign extends JInternalFrame implements MouseListener, MouseMot
         addInternalFrameListener(new InternalFrameListener(){
             public void internalFrameClosing(InternalFrameEvent internalFrameEvent) {
                 if (isModified()) {
-                    int resposta = JOptionPane.showConfirmDialog(null,"O mapa foi modificado deseja realmente fechar a sua janela sem salvar?",
-                                                                      "Fechar",
+                    int resposta = JOptionPane.showConfirmDialog(null,Messages.getString("MapDesign.oMapaFoiModificado"),
+                                                                      Messages.getString("MapDesign.fechar"),
                                                                       JOptionPane.YES_NO_OPTION);
                     if (resposta == JOptionPane.YES_OPTION) {
                         internalFrameEvent.getInternalFrame().dispose();
@@ -265,7 +267,7 @@ public class MapDesign extends JInternalFrame implements MouseListener, MouseMot
             FileWriter writer = new FileWriter(file);
             PrintWriter out = new PrintWriter(writer);
 
-            String aux = "";
+            String aux = ""; //$NON-NLS-1$
             for (char[] charsY : matrizMapa) {
                 aux = "";
                 for (char c : charsY) {

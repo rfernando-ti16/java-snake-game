@@ -10,6 +10,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import com.i18n.Messages;
+
 /**
  * Representa o estado no menu
  * 
@@ -34,22 +36,20 @@ public class Menu extends BasicGameState {
         return stateId;
     }
 
-    @Override
     public void init(GameContainer gc, StateBasedGame sbg)
             throws SlickException {
-        background = new Image("img/mainMenu.png");
+        background = new Image("img/mainMenu.png"); 
         options = new String[3];
-        options[0] = "Jogar";
-        options[1] = "Configurações";
-        options[2] = "Sair";
     }
 
-    @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g)
             throws SlickException {
         background.draw(( Game.GAME_WIDTH - background.getWidth()) / 2, 50);
 
         int y = background.getHeight() + 150;
+        options[0] = Messages.getString("Menu.jogar");
+        options[1] = Messages.getString("Menu.configuracoes");
+        options[2] = Messages.getString("Menu.sair");
         for (int i = 0; i < options.length; i++) {
             if (i == indice) {
                 g.setColor(Color.gray);
@@ -60,7 +60,6 @@ public class Menu extends BasicGameState {
         }
     }
 
-    @Override
     public void update(GameContainer gc, StateBasedGame sbg, int delta)
             throws SlickException {
         Input input = gc.getInput();
@@ -88,7 +87,8 @@ public class Menu extends BasicGameState {
                 break;
             // Configuração
             case 1:
-                //TODO Implementar uma ação quando criar a tela
+                sbg.getState(Main.CONFIG).init(gc, sbg);
+                sbg.enterState(Main.CONFIG);
                 break;
             // Sair
             case 2:
